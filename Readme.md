@@ -1,6 +1,6 @@
-# Expense Tracker — Backend
+# Expense Tracker — Frontend
 
-REST API for the Expense Tracker Management System, built with **FastAPI** and **MySQL**.
+Interactive web UI for the Expense Tracker Management System, built with **Streamlit**.
 
 ---
 
@@ -9,72 +9,66 @@ REST API for the Expense Tracker Management System, built with **FastAPI** and *
 | Technology | Purpose |
 |---|---|
 | Python | Programming Language |
-| FastAPI | REST API Framework |
-| MySQL | Database |
-| Pydantic | Data Validation |
-| Uvicorn | ASGI Server |
-| python-dotenv | Environment Variables |
+| Streamlit | Frontend Web UI |
+| Requests | API Communication |
+| Pandas | Data Handling |
+| Plotly | Interactive Charts |
 
 ---
 
-## API Endpoints
+## Features
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | / | Health Check |
-| POST | /expenses | Add Expense |
-| GET | /get_expenses | Get All Expenses |
-| GET | /get_expenses_single/{id} | Get Single Expense |
-| PUT | /update_expenses/{id} | Update Expense |
-| DELETE | /delete_expense/{id} | Delete Expense |
-| GET | /search_expenses | Search Expenses |
-| GET | /sort_expenses | Sort Expenses |
-| GET | /filter_expenses/{filter_by} | Filter by Category |
-| GET | /analyze_expenses/{analyze_by} | Analyze Expenses |
-
----
-
-## Database Setup
-
-```sql
-CREATE DATABASE expenses_db;
-
-CREATE TABLE expenses1 (
-    expense_id     INT AUTO_INCREMENT PRIMARY KEY,
-    title          VARCHAR(200) NOT NULL,
-    payment_method VARCHAR(50)  NOT NULL,
-    amount         FLOAT        NOT NULL,
-    category       VARCHAR(100) NOT NULL,
-    spent_at       DATE         NOT NULL
-);
-```
+| Feature | Description |
+|---|---|
+| 📊 Dashboard | KPI cards + Pie, Bar, Category charts |
+| ➕ Add Expenses | Form with validation |
+| 👁️ View Expenses | Full table with totals |
+| ✏️ Update Expenses | Fetch by ID and edit |
+| 🗑️ Delete Expenses | View table then delete by ID |
+| 🔍 Search Expenses | Search by title or category |
+| 🔃 Sort Expenses | Sort by any field, asc/desc |
+| 🎛️ Filter Expenses | Filter by category |
+| 📈 Analyze Expenses | Charts by category / payment / date |
 
 ---
 
-## Environment Variables
+## Setup
 
-Create a `.env` file:
-
-```env
-db_host=localhost
-db_user=root
-db_password=your_password
-db_database=expenses_db
-db_port=3306
-```
-
----
-
-## Run Locally
+### 1. Install dependencies
 
 ```bash
 pip install -r requirements.txt
-uvicorn main:app --reload
 ```
 
-Backend runs at: `http://127.0.0.1:8000`
+### 2. Create secrets file
 
-API Docs at: `http://127.0.0.1:8000/docs`
+Create `.streamlit/secrets.toml`:
+
+```toml
+backend_server = "https://your-backend-url.onrender.com"
+```
+
+### 3. Run locally
+
+```bash
+streamlit run app.py
+```
+
+Frontend runs at: `http://localhost:8501`
+
+---
+
+## Project Architecture
+
+```
+User Browser
+     ↓
+Streamlit Frontend  (app.py)
+     ↓  HTTP Requests
+FastAPI Backend     (main.py)
+     ↓  SQL Queries
+MySQL Database      (expenses_db)
+```
 
 ---
 
